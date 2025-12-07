@@ -40,7 +40,7 @@ export default function Equalizer() {
               onValueChange={(value) => handleSliderChange(index, value)}
               className="w-2 h-full my-auto [&>span]:w-full [&>span>span]:bg-primary"
             />
-            <span className="text-sm mt-4 font-medium text-muted-foreground">{band}Hz</span>
+            <span className="text-xs mt-4 font-medium text-muted-foreground">{band}Hz</span>
           </div>
         ))}
       </div>

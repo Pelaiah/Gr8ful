@@ -39,15 +39,15 @@ export default function LyricsDisplay() {
 
   return (
     <div className="w-full h-64 my-auto">
-      <ScrollArea className="h-full w-full bg-black/30 backdrop-blur-md rounded-2xl">
+      <ScrollArea className="h-full w-full bg-black/30 backdrop-blur-sm rounded-none border border-white/20">
         <div ref={scrollRef} className="p-4">
           {lyricsLines.map((line, index) => (
             <p
               key={index}
               data-line-index={index}
               className={cn(
-                'text-center text-xl font-medium transition-all duration-300 py-2',
-                index === activeLineIndex ? 'text-white text-2xl font-bold scale-105' : 'text-white/50'
+                'text-center text-lg font-bold transition-all duration-300 py-2 leading-tight',
+                index === activeLineIndex ? 'text-primary scale-105' : 'text-white/70'
               )}
             >
               {line || '...'}

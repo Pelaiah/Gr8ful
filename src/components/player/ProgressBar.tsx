@@ -19,7 +19,7 @@ export default function ProgressBar() {
         max={duration}
         step={1}
         onValueChange={(value) => seek(value[0])}
-        className="[&_span:first-child]:h-1 [&>span>span]:bg-primary [&>span>span]:h-1 [&>a]:h-3 [&>a]:w-3 [&>a]:bg-white [&>a]:border-0 [&>a]:shadow-md"
+        className="[&_span:first-child]:h-2 [&>span>span]:bg-primary [&>span>span]:h-2 [&>a]:h-4 [&>a]:w-4 [&>a]:bg-white [&>a]:border-2 [&>a]:border-black [&>a]:rounded-none"
       />
       <div className="flex justify-between text-xs text-white/70 mt-1">
         <span>{formatTime(progress)}</span>

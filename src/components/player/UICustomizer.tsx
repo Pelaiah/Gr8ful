@@ -16,18 +16,18 @@ export default function UICustomizer() {
           <button
             key={theme.name}
             onClick={() => setTheme(theme)}
-            className="p-4 rounded-lg border-2 transition-colors flex flex-col items-center justify-center relative"
+            className="p-4 rounded-none border-2 transition-colors flex flex-col items-center justify-center relative"
             style={{
               borderColor: activeTheme.name === theme.name ? `hsl(${theme.primary})` : 'hsl(var(--border))'
             }}
           >
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-6 h-6 rounded-full" style={{ backgroundColor: `hsl(${theme.primary})` }} />
-              <div className="w-6 h-6 rounded-full" style={{ backgroundColor: `hsl(${theme.accent})` }} />
+              <div className="w-6 h-6 rounded-none" style={{ backgroundColor: `hsl(${theme.primary})` }} />
+              <div className="w-6 h-6 rounded-none" style={{ backgroundColor: `hsl(${theme.accent})` }} />
             </div>
-            <p className="font-medium text-foreground">{theme.name}</p>
+            <p className="font-medium text-foreground text-sm">{theme.name}</p>
             {activeTheme.name === theme.name && (
-              <div className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center" style={{ backgroundColor: `hsl(${theme.primary})` }}>
+              <div className="absolute top-2 right-2 w-5 h-5 rounded-none flex items-center justify-center" style={{ backgroundColor: `hsl(${theme.primary})` }}>
                 <Check size={16} className="text-primary-foreground" />
               </div>
             )}

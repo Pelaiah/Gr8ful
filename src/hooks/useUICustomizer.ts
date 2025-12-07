@@ -9,10 +9,10 @@ type ThemeColor = {
 };
 
 export const themeColors: ThemeColor[] = [
+  { name: 'Purple', primary: '265 91% 60%', accent: '265 100% 95%' },
+  { name: 'Yellow', primary: '45 91% 50%', accent: '45 100% 85%' },
   { name: 'Green', primary: '141 71% 42%', accent: '141 100% 85%' },
   { name: 'Blue', primary: '217 91% 60%', accent: '217 100% 88%' },
-  { name: 'Purple', primary: '262 84% 60%', accent: '262 100% 88%' },
-  { name: 'Orange', primary: '25 95% 53%', accent: '25 100% 85%' },
 ];
 
 export const useUICustomizer = () => {
@@ -21,9 +21,15 @@ export const useUICustomizer = () => {
   const applyTheme = useCallback((theme: ThemeColor) => {
     const root = document.documentElement;
     if (root) {
+      document.documentElement.classList.add('dark');
       root.style.setProperty('--primary', theme.primary);
       root.style.setProperty('--accent', theme.accent);
       root.style.setProperty('--ring', theme.primary);
+      if(theme.name === 'Yellow') {
+        root.style.setProperty('--primary-foreground', '30 100% 6%');
+      } else {
+        root.style.setProperty('--primary-foreground', '0 0% 100%');
+      }
     }
   }, []);
 
