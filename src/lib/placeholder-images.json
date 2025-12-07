@@ -1,3 +1,22 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "album-art-1",
+      "description": "Abstract neon lights for The Weeknd's Blinding Lights",
+      "imageUrl": "https://images.unsplash.com/photo-1544365558-35aa4afcf11f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxuZW9uJTIwbGlnaHRzfGVufDB8fHx8MTc2NTEzMjExNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "neon lights"
+    },
+    {
+      "id": "album-art-2",
+      "description": "Minimalist interior for Harry Styles' As It Was",
+      "imageUrl": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtaW5pbWFsaXN0JTIwaW50ZXJpb3J8ZW58MHx8fHwxNzY1MDg2MDA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "minimalist interior"
+    },
+    {
+      "id": "album-art-3",
+      "description": "Galaxy or space theme for Dua Lipa's Levitating",
+      "imageUrl": "https://images.unsplash.com/photo-1539321908154-04927596764d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnYWxheHklMjBzcGFjZXxlbnwwfHx8fDE3NjUwMjA1NTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "galaxy space"
+    }
+  ]
 }
