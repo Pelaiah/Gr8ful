@@ -34,7 +34,7 @@ export default function Controls() {
       </Button>
       <Button
         size="icon"
-        className="w-16 h-16 rounded-none bg-white text-black hover:bg-gray-200"
+        className="w-16 h-16 rounded-full bg-white text-black hover:bg-gray-200"
         onClick={togglePlay}
         aria-label={isPlaying ? "Pause" : "Play"}
       >

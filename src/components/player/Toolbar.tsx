@@ -20,7 +20,7 @@ export default function Toolbar() {
                         <Search size={20} />
                     </Button>
                 </SheetTrigger>
-                <SheetContent side="bottom" className="rounded-none border-t-4 border-black bg-card">
+                <SheetContent side="bottom" className="rounded-t-2xl border-t-0 bg-card">
                     <OnlineSearch />
                 </SheetContent>
             </Sheet>
@@ -41,7 +41,7 @@ export default function Toolbar() {
                         <SlidersHorizontal size={20} />
                     </Button>
                 </SheetTrigger>
-                <SheetContent side="bottom" className="rounded-none border-t-4 border-black bg-card">
+                <SheetContent side="bottom" className="rounded-t-2xl border-t-0 bg-card">
                     <Equalizer />
                 </SheetContent>
             </Sheet>

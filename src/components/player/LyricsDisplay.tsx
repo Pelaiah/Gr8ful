@@ -39,7 +39,7 @@ export default function LyricsDisplay() {
 
   return (
     <div className="w-full h-64 my-auto">
-      <ScrollArea className="h-full w-full bg-black/30 backdrop-blur-sm rounded-none border border-white/20">
+      <ScrollArea className="h-full w-full bg-black/30 backdrop-blur-sm rounded-lg border border-white/20">
         <div ref={scrollRef} className="p-4">
           {lyricsLines.map((line, index) => (
             <p

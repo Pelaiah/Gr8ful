@@ -104,7 +104,7 @@ export default function OnlineSearch() {
             {searchResults.map((result, index) => (
             <button
                 key={index}
-                className="w-full text-left p-3 rounded-none hover:bg-muted transition-colors"
+                className="w-full text-left p-3 rounded-lg hover:bg-muted transition-colors"
                 onClick={() => handleSelectTrack(result)}
             >
                 <p className="font-medium text-foreground">{result}</p>
