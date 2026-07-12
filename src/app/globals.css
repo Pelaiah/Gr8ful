@@ -64,6 +64,14 @@
                 radial-gradient(circle at 100% 50%, transparent 12px, black 12px);
     mask-composite: intersect;
   }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 @layer base {

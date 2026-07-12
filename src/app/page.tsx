@@ -3,15 +3,18 @@
 import { useEffect, useState } from 'react';
 import OnboardingFlow from '@/components/onboarding/OnboardingFlow';
 import ArtistProfile from '@/components/artist/ArtistProfile';
+import AudiencePortal from '@/components/audience/AudiencePortal';
 import TicketCard from '@/components/ui/TicketCard';
 import ProductCard from '@/components/merch/ProductCard';
 import { Button } from '@/components/ui/button';
-import { Rocket, Ticket, ShoppingBag, User } from 'lucide-react';
+import { Rocket, Ticket, ShoppingBag, User, Users, ShieldCheck } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from '@/lib/utils';
 
 export default function Home() {
   const [hasMounted, setHasMounted] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [portalMode, setPortalMode] = useState<'artist' | 'audience'>('audience');
 
   useEffect(() => {
     setHasMounted(true);
@@ -23,12 +26,39 @@ export default function Home() {
     return <OnboardingFlow onComplete={() => setShowOnboarding(false)} />;
   }
 
+  // Audience Portal Mode
+  if (portalMode === 'audience') {
+    return (
+      <>
+        <AudiencePortal />
+        {/* Switcher Toggle for Demo */}
+        <div className="fixed top-6 right-24 z-[60]">
+          <Button 
+            variant="ghost" 
+            className="bg-black/50 backdrop-blur-md border border-white/10 text-white/50 hover:text-white rounded-full text-[10px] font-black uppercase px-4 h-8"
+            onClick={() => setPortalMode('artist')}
+          >
+            Artist ERP
+          </Button>
+        </div>
+      </>
+    );
+  }
+
+  // Artist ERP Mode
   return (
     <main className="min-h-screen bg-[#F5F5F7] text-zinc-900">
       {/* Navigation Header */}
       <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-zinc-200 px-6 h-16 flex items-center justify-between">
         <h1 className="text-2xl font-black tracking-tighter">GR8FUL.</h1>
         <div className="flex items-center gap-4">
+           <Button 
+            variant="outline" 
+            className="rounded-full text-[10px] font-black uppercase h-8 border-2"
+            onClick={() => setPortalMode('audience')}
+           >
+             Audience Mode
+           </Button>
            <Button variant="ghost" size="icon" className="rounded-full">
              <User size={20} />
            </Button>
@@ -176,8 +206,8 @@ export default function Home() {
           <span className="text-[8px] font-black uppercase">Shop</span>
         </button>
         <button className="text-zinc-400 flex flex-col items-center gap-1">
-          <User size={20} />
-          <span className="text-[8px] font-black uppercase">Vault</span>
+          <ShieldCheck size={20} />
+          <span className="text-[8px] font-black uppercase">Rights</span>
         </button>
       </div>
     </main>
