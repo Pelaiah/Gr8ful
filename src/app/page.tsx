@@ -51,8 +51,8 @@ export default function Home() {
           </TabsList>
 
           <TabsContent value="artist" className="space-y-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-               <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+               <div className="space-y-6 pt-12">
                  <h2 className="text-6xl font-black tracking-tighter text-zinc-900 leading-[0.9]">
                    THE OS FOR <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">AUTONOMOUS</span> <br/>CREATORS.
                  </h2>
@@ -67,11 +67,11 @@ export default function Home() {
                </div>
                
                <ArtistProfile 
-                 name="Luna Stargazer"
-                 handle="lunastar"
-                 followers="1.2M"
-                 avatarUrl="https://picsum.photos/seed/luna/400/400"
-                 bannerUrl="https://picsum.photos/seed/concert/800/1200"
+                 name="Evelyn Smith"
+                 handle="evelynsmith"
+                 followers="2,425"
+                 avatarUrl="https://picsum.photos/seed/evelyn/400/400"
+                 bannerUrl="https://picsum.photos/seed/portrait1/800/1200"
                />
             </div>
           </TabsContent>
