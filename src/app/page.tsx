@@ -2,8 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import OnboardingFlow from '@/components/onboarding/OnboardingFlow';
+import ArtistProfile from '@/components/artist/ArtistProfile';
+import TicketCard from '@/components/ui/TicketCard';
+import ProductCard from '@/components/merch/ProductCard';
 import { Button } from '@/components/ui/button';
-import { Music2, Rocket, BarChart3, Users } from 'lucide-react';
+import { Rocket, Ticket, ShoppingBag, User } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
   const [hasMounted, setHasMounted] = useState(false);
@@ -20,39 +24,162 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center space-y-8">
-      <div className="space-y-4">
-        <h1 className="text-6xl font-black tracking-tighter text-primary">GR8FUL.</h1>
-        <p className="text-xl text-muted-foreground max-w-md mx-auto">
-          The Enterprise Resource Planning platform for the next generation of autonomous artists.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
-        <div className="p-6 rounded-2xl bg-card border border-border flex flex-col items-center space-y-3">
-          <Music2 className="text-primary h-8 w-8" />
-          <h3 className="font-bold">Creator ERP</h3>
-          <p className="text-xs text-muted-foreground">Manage drops, analytics, and rights.</p>
+    <main className="min-h-screen bg-[#F5F5F7] text-zinc-900">
+      {/* Navigation Header */}
+      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-zinc-200 px-6 h-16 flex items-center justify-between">
+        <h1 className="text-2xl font-black tracking-tighter">GR8FUL.</h1>
+        <div className="flex items-center gap-4">
+           <Button variant="ghost" size="icon" className="rounded-full">
+             <User size={20} />
+           </Button>
         </div>
-        <div className="p-6 rounded-2xl bg-card border border-border flex flex-col items-center space-y-3">
-          <Users className="text-primary h-8 w-8" />
-          <h3 className="font-bold">D2C Fan Hub</h3>
-          <p className="text-xs text-muted-foreground">Direct engagement and viral referrals.</p>
-        </div>
-      </div>
+      </nav>
 
-      <div className="flex flex-col w-full max-w-md space-y-3">
-        <Button size="lg" className="w-full h-14 text-lg font-bold rounded-full" onClick={() => setShowOnboarding(true)}>
-          <Rocket className="mr-2 h-5 w-5" /> Start Artist Onboarding
-        </Button>
-        <Button variant="outline" size="lg" className="w-full h-14 text-lg font-bold rounded-full">
-          Enter Fan Drop Feed
-        </Button>
+      <div className="pt-24 pb-12 px-6 max-w-7xl mx-auto space-y-12">
+        
+        <Tabs defaultValue="artist" className="w-full">
+          <TabsList className="bg-zinc-200/50 p-1 rounded-full mb-8">
+            <TabsTrigger value="artist" className="rounded-full px-8 font-bold data-[state=active]:bg-white">
+              Artist Hub
+            </TabsTrigger>
+            <TabsTrigger value="tickets" className="rounded-full px-8 font-bold data-[state=active]:bg-white">
+              Event Tickets
+            </TabsTrigger>
+            <TabsTrigger value="merch" className="rounded-full px-8 font-bold data-[state=active]:bg-white">
+              Storefront
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="artist" className="space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+               <div className="space-y-6">
+                 <h2 className="text-6xl font-black tracking-tighter text-zinc-900 leading-[0.9]">
+                   THE OS FOR <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">AUTONOMOUS</span> <br/>CREATORS.
+                 </h2>
+                 <p className="text-xl text-zinc-500 font-medium max-w-md">
+                   Manage your drops, analytics, and rights in one glassmorphic ERP. 100% ownership. Zero algorithms.
+                 </p>
+                 <div className="flex gap-4">
+                   <Button size="lg" className="rounded-full h-14 px-8 font-black text-lg bg-zinc-900" onClick={() => setShowOnboarding(true)}>
+                     <Rocket className="mr-2 w-5 h-5" /> Start Onboarding
+                   </Button>
+                 </div>
+               </div>
+               
+               <ArtistProfile 
+                 name="Luna Stargazer"
+                 handle="lunastar"
+                 followers="1.2M"
+                 avatarUrl="https://picsum.photos/seed/luna/400/400"
+                 bannerUrl="https://picsum.photos/seed/concert/800/1200"
+               />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="tickets" className="space-y-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-3xl font-black tracking-tighter">Upcoming Drops</h2>
+                <p className="text-zinc-500 font-medium">Cyberpunk gradient wallet stubs.</p>
+              </div>
+              <Button variant="outline" className="rounded-full border-2 font-bold">View All</Button>
+            </div>
+            
+            <div className="flex gap-8 overflow-x-auto pb-8 snap-x">
+              <div className="snap-center">
+                <TicketCard 
+                  artistName="Nebula Kid"
+                  eventName="Void Tour: Phase 1"
+                  date="Oct 24, 2024"
+                  location="Tokyo Dome"
+                  imageUrl="https://picsum.photos/seed/neon1/600/800"
+                  price="$89.00"
+                />
+              </div>
+              <div className="snap-center">
+                <TicketCard 
+                  artistName="Synthwave Queen"
+                  eventName="Midnight Echoes"
+                  date="Nov 12, 2024"
+                  location="Berlin Arena"
+                  imageUrl="https://picsum.photos/seed/neon2/600/800"
+                  price="$65.00"
+                />
+              </div>
+              <div className="snap-center">
+                <TicketCard 
+                  artistName="Bass Master"
+                  eventName="Gravity Pulse"
+                  date="Dec 05, 2024"
+                  location="Brooklyn Steel"
+                  imageUrl="https://picsum.photos/seed/neon3/600/800"
+                  price="$45.00"
+                />
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="merch" className="space-y-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-3xl font-black tracking-tighter">Exclusive Merch</h2>
+                <p className="text-zinc-500 font-medium">Minimalist studio high-end fashion.</p>
+              </div>
+              <Button variant="outline" className="rounded-full border-2 font-bold">Shop Collection</Button>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <ProductCard 
+                title="Gr8ful Void Hoodie"
+                category="Apparel"
+                price="$120"
+                imageUrl="https://picsum.photos/seed/hoodie/400/500"
+                isNew
+              />
+              <ProductCard 
+                title="Artist Edition Tee"
+                category="Apparel"
+                price="$45"
+                imageUrl="https://picsum.photos/seed/tee/400/500"
+              />
+              <ProductCard 
+                title="Nexus Vinyl (Limited)"
+                category="Collectibles"
+                price="$60"
+                imageUrl="https://picsum.photos/seed/vinyl/400/500"
+                isNew
+              />
+              <ProductCard 
+                title="Stargazer Tote"
+                category="Accessories"
+                price="$35"
+                imageUrl="https://picsum.photos/seed/tote/400/500"
+              />
+            </div>
+          </TabsContent>
+        </Tabs>
+
       </div>
       
-      <p className="text-xs text-muted-foreground pt-12">
-        Creators retain 100% ownership. Zero algorithms. Pure autonomy.
-      </p>
+      {/* Bottom Floating Nav */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-xl border border-zinc-200 rounded-full shadow-2xl px-8 py-4 flex items-center gap-12">
+        <button className="text-zinc-900 flex flex-col items-center gap-1">
+          <Rocket size={20} />
+          <span className="text-[8px] font-black uppercase">Feed</span>
+        </button>
+        <button className="text-zinc-400 flex flex-col items-center gap-1">
+          <Ticket size={20} />
+          <span className="text-[8px] font-black uppercase">Tickets</span>
+        </button>
+        <button className="text-zinc-400 flex flex-col items-center gap-1">
+          <ShoppingBag size={20} />
+          <span className="text-[8px] font-black uppercase">Shop</span>
+        </button>
+        <button className="text-zinc-400 flex flex-col items-center gap-1">
+          <User size={20} />
+          <span className="text-[8px] font-black uppercase">Vault</span>
+        </button>
+      </div>
     </main>
   );
 }
