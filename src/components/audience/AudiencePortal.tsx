@@ -15,26 +15,40 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
-const ArtistAvatar = ({ imageUrl, isActive }: { imageUrl: string, isActive?: boolean }) => (
-  <div className="relative flex-shrink-0">
+interface ArtistData {
+  name: string;
+  handle: string;
+  followers: string;
+  avatarUrl: string;
+  bannerUrl: string;
+}
+
+const ArtistAvatar = ({ imageUrl, isActive, onClick }: { imageUrl: string, isActive?: boolean, onClick?: () => void }) => (
+  <button 
+    onClick={onClick}
+    className="relative flex-shrink-0 transition-transform hover:scale-105 active:scale-95"
+  >
     <div className="w-16 h-16 rounded-[22px] overflow-hidden border-2 border-white/10 p-0.5">
       <img src={imageUrl} alt="artist" className="w-full h-full object-cover rounded-[18px]" />
     </div>
     {isActive && (
       <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-black rounded-full shadow-lg"></div>
     )}
-  </div>
+  </button>
 );
 
-const LiveCard = ({ artistName, followers, title, imageUrl, viewers, duration }: { 
-  artistName: string, 
-  followers: string, 
+const LiveCard = ({ artist, title, imageUrl, viewers, duration, onClick }: { 
+  artist: ArtistData,
   title: string, 
   imageUrl: string,
   viewers: string,
-  duration: string
+  duration: string,
+  onClick?: () => void
 }) => (
-  <div className="relative w-64 h-96 rounded-[32px] overflow-hidden flex-shrink-0 group cursor-pointer shadow-2xl">
+  <div 
+    onClick={onClick}
+    className="relative w-64 h-96 rounded-[32px] overflow-hidden flex-shrink-0 group cursor-pointer shadow-2xl"
+  >
     <img src={imageUrl} alt={title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80"></div>
     
@@ -42,11 +56,11 @@ const LiveCard = ({ artistName, followers, title, imageUrl, viewers, duration }:
     <div className="absolute top-4 left-4 right-4 flex items-center justify-between bg-black/30 backdrop-blur-md p-2 rounded-2xl border border-white/10">
       <div className="flex items-center gap-2">
         <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20">
-          <img src={`https://picsum.photos/seed/${artistName}/100/100`} alt={artistName} className="w-full h-full object-cover" />
+          <img src={artist.avatarUrl} alt={artist.name} className="w-full h-full object-cover" />
         </div>
-        <div className="flex flex-col">
-          <span className="text-[10px] font-bold text-white leading-none">{artistName}</span>
-          <span className="text-[8px] font-medium text-white/60">{followers} FOLLOWERS</span>
+        <div className="flex flex-col text-left">
+          <span className="text-[10px] font-bold text-white leading-none">{artist.name}</span>
+          <span className="text-[8px] font-medium text-white/60">{artist.followers} FOLLOWERS</span>
         </div>
       </div>
       <button className="text-[8px] font-bold text-yellow-500 uppercase px-2 py-1 bg-white/10 rounded-lg hover:bg-white/20 transition-colors">
@@ -87,7 +101,14 @@ const PopularCard = ({ date, imageUrl }: { date: string, imageUrl: string }) => 
   </div>
 );
 
-export default function AudiencePortal() {
+export default function AudiencePortal({ onSelectArtist }: { onSelectArtist: (artist: ArtistData) => void }) {
+  const artists: ArtistData[] = [
+    { name: 'Marina', handle: 'marina_vision', followers: '119.2k', avatarUrl: 'https://picsum.photos/seed/marina_av/100/100', bannerUrl: 'https://picsum.photos/seed/live1/600/900' },
+    { name: 'Kaelen', handle: 'kaelen_beats', followers: '425.5k', avatarUrl: 'https://picsum.photos/seed/kaelen_av/100/100', bannerUrl: 'https://picsum.photos/seed/live2/600/900' },
+    { name: 'Zora', handle: 'zora_art', followers: '88.1k', avatarUrl: 'https://picsum.photos/seed/zora_av/100/100', bannerUrl: 'https://picsum.photos/seed/live3/600/900' },
+    { name: 'Nebula', handle: 'nebula_music', followers: '1.2M', avatarUrl: 'https://picsum.photos/seed/nebula_av/100/100', bannerUrl: 'https://picsum.photos/seed/live4/600/900' },
+  ];
+
   return (
     <div className="min-h-screen bg-[#0A0A0B] text-white pb-32">
       {/* Top Header */}
@@ -116,12 +137,14 @@ export default function AudiencePortal() {
         <section className="space-y-4">
           <h2 className="text-sm font-bold text-white/50 uppercase tracking-widest">Your Artists</h2>
           <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2">
-            <ArtistAvatar imageUrl="https://picsum.photos/seed/a1/100/100" isActive />
-            <ArtistAvatar imageUrl="https://picsum.photos/seed/a2/100/100" isActive />
-            <ArtistAvatar imageUrl="https://picsum.photos/seed/a3/100/100" isActive />
-            <ArtistAvatar imageUrl="https://picsum.photos/seed/a4/100/100" />
-            <ArtistAvatar imageUrl="https://picsum.photos/seed/a5/100/100" />
-            <ArtistAvatar imageUrl="https://picsum.photos/seed/a6/100/100" />
+            {artists.map((artist, idx) => (
+              <ArtistAvatar 
+                key={idx} 
+                imageUrl={artist.avatarUrl} 
+                isActive={idx < 2} 
+                onClick={() => onSelectArtist(artist)}
+              />
+            ))}
           </div>
         </section>
 
@@ -129,36 +152,18 @@ export default function AudiencePortal() {
         <section className="space-y-4">
           <h2 className="text-sm font-bold text-white/50 uppercase tracking-widest">Artists on Live</h2>
           <div className="flex gap-6 overflow-x-auto no-scrollbar pb-4 snap-x">
-            <div className="snap-center">
-              <LiveCard 
-                artistName="Marina"
-                followers="119"
-                title="WINDS OF DESTINY"
-                imageUrl="https://picsum.photos/seed/live1/600/900"
-                viewers="86.54k"
-                duration="2m"
-              />
-            </div>
-            <div className="snap-center">
-              <LiveCard 
-                artistName="Kaelen"
-                followers="425"
-                title="NEON VOYAGE"
-                imageUrl="https://picsum.photos/seed/live2/600/900"
-                viewers="12.2k"
-                duration="15m"
-              />
-            </div>
-            <div className="snap-center">
-              <LiveCard 
-                artistName="Zora"
-                followers="88"
-                title="VOID PULSE"
-                imageUrl="https://picsum.photos/seed/live3/600/900"
-                viewers="4.1k"
-                duration="1h"
-              />
-            </div>
+            {artists.slice(0, 3).map((artist, idx) => (
+              <div key={idx} className="snap-center">
+                <LiveCard 
+                  artist={artist}
+                  title={idx === 0 ? "WINDS OF DESTINY" : idx === 1 ? "NEON VOYAGE" : "VOID PULSE"}
+                  imageUrl={artist.bannerUrl}
+                  viewers={idx === 0 ? "86.54k" : idx === 1 ? "12.2k" : "4.1k"}
+                  duration={idx === 0 ? "2m" : idx === 1 ? "15m" : "1h"}
+                  onClick={() => onSelectArtist(artist)}
+                />
+              </div>
+            ))}
           </div>
         </section>
 

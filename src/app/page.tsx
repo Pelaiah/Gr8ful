@@ -15,6 +15,7 @@ export default function Home() {
   const [hasMounted, setHasMounted] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [portalMode, setPortalMode] = useState<'artist' | 'audience'>('audience');
+  const [selectedArtist, setSelectedArtist] = useState<any | null>(null);
 
   useEffect(() => {
     setHasMounted(true);
@@ -28,9 +29,24 @@ export default function Home() {
 
   // Audience Portal Mode
   if (portalMode === 'audience') {
+    if (selectedArtist) {
+      return (
+        <div className="bg-black min-h-screen flex items-center justify-center p-4">
+          <ArtistProfile 
+            name={selectedArtist.name}
+            handle={selectedArtist.handle}
+            followers={selectedArtist.followers}
+            avatarUrl={selectedArtist.avatarUrl}
+            bannerUrl={selectedArtist.bannerUrl}
+            onClose={() => setSelectedArtist(null)}
+          />
+        </div>
+      );
+    }
+
     return (
       <>
-        <AudiencePortal />
+        <AudiencePortal onSelectArtist={(artist) => setSelectedArtist(artist)} />
         {/* Switcher Toggle for Demo */}
         <div className="fixed top-6 right-24 z-[60]">
           <Button 

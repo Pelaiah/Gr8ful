@@ -21,6 +21,7 @@ interface ArtistProfileProps {
   followers: string;
   avatarUrl: string;
   bannerUrl: string;
+  onClose?: () => void;
 }
 
 const Badge = ({ icon: Icon, label, colorClass, shapeClass }: { icon: any, label: string, colorClass: string, shapeClass: string }) => (
@@ -59,7 +60,8 @@ export default function ArtistProfile({
   handle,
   followers,
   avatarUrl,
-  bannerUrl
+  bannerUrl,
+  onClose
 }: ArtistProfileProps) {
   return (
     <div className="relative w-full max-w-md mx-auto overflow-hidden bg-black text-white h-[90vh] rounded-[48px] shadow-2xl border-[8px] border-zinc-900">
@@ -77,10 +79,15 @@ export default function ArtistProfile({
 
       {/* Header Navigation */}
       <div className="relative z-20 flex items-center justify-between p-6 pt-12">
-        <Button variant="ghost" size="icon" className="rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20"
+          onClick={onClose}
+        >
           <X className="w-5 h-5" />
         </Button>
-        <span className="text-sm font-medium text-white/80 tracking-tight">orb.club/@{handle}</span>
+        <span className="text-sm font-medium text-white/80 tracking-tight">gr8ful.app/@{handle}</span>
         <Button variant="ghost" size="icon" className="rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20">
           <MoreHorizontal className="w-5 h-5" />
         </Button>
@@ -128,7 +135,7 @@ export default function ArtistProfile({
         </div>
         
         <p className="text-sm font-medium text-white/70 max-w-[240px] leading-relaxed mb-6">
-          nft artist / visual designer<br/>passionate about web3
+          independent artist / producer<br/>autonomy is everything
         </p>
 
         {/* Small Action Buttons */}
@@ -137,7 +144,7 @@ export default function ArtistProfile({
             <Info className="w-3 h-3 mr-1.5" /> About
           </Button>
           <Button variant="secondary" className="h-8 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-[10px] font-black uppercase hover:bg-white/20 px-4">
-            <Globe className="w-3 h-3 mr-1.5" /> evelynsmith.com
+            <Globe className="w-3 h-3 mr-1.5" /> gr8ful.app/@{handle}
           </Button>
         </div>
 
@@ -164,7 +171,7 @@ export default function ArtistProfile({
 
         {/* Primary Action Button */}
         <Button className="w-full h-16 rounded-[24px] bg-white/10 backdrop-blur-xl border border-white/20 text-white font-black text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-3">
-          <UserCheck className="w-6 h-6" /> Friends
+          <UserCheck className="w-6 h-6" /> Follow
         </Button>
       </div>
     </div>
