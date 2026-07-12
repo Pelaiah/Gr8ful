@@ -11,7 +11,7 @@ interface LandingPageProps {
 export default function LandingPage({ onGetStarted }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-[#F5F5F7] text-zinc-900 selection:bg-purple-100">
-      {/* Hero Section */}
+      {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-zinc-200 px-6 h-16 flex items-center justify-between">
         <h1 className="text-2xl font-black tracking-tighter">GR8FUL.</h1>
         <Button variant="ghost" className="font-bold text-sm" onClick={onGetStarted}>Sign In</Button>
@@ -31,7 +31,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
               </span>
             </h1>
             <p className="text-xl text-zinc-500 font-medium max-w-lg leading-relaxed">
-              The first autonomous operating system for independent artists and the fans who champion them. 100% ownership. Zero algorithms. Direct connection.
+              Manage your drops, analytics, and rights in one glassmorphic ERP. 100% ownership. Zero algorithms. The first autonomous operating system for independent artists and their fans.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <Button size="lg" className="rounded-full h-16 px-10 font-black text-lg bg-zinc-900 hover:scale-105 transition-transform" onClick={onGetStarted}>
@@ -76,13 +76,33 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
           </div>
         </div>
 
-        {/* Value Pillars */}
+        {/* 4 Pillars Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-32">
           {[
-            { icon: Rocket, title: "Campaign Engine", desc: "Automated project cycles without the need for traditional labels.", color: "bg-purple-50 text-purple-600" },
-            { icon: Globe, title: "Identity Sync", desc: "Manage your cross-platform social footprint from a singular admin panel.", color: "bg-pink-50 text-pink-600" },
-            { icon: BarChart3, title: "Deep Analytics", desc: "Real-time growth telemetry mapping viral spikes to conversions.", color: "bg-blue-50 text-blue-600" },
-            { icon: ShieldCheck, title: "Rights Governance", desc: "Millisecond-level word alignment and 100% catalog ownership.", color: "bg-cyan-50 text-cyan-600" },
+            { 
+              icon: Rocket, 
+              title: "Campaign Engine", 
+              desc: "Automated rollouts, pre-save funnels & smart budget mapping without traditional labels.", 
+              color: "bg-purple-50 text-purple-600" 
+            },
+            { 
+              icon: Globe, 
+              title: "Identity Sync", 
+              desc: "Omni-channel scheduling across TikTok, Instagram & YouTube from one panel.", 
+              color: "bg-pink-50 text-pink-600" 
+            },
+            { 
+              icon: BarChart3, 
+              title: "Deep Analytics", 
+              desc: "Cross-platform growth maps & granular demographics for strategic tour planning.", 
+              color: "bg-blue-50 text-blue-600" 
+            },
+            { 
+              icon: ShieldCheck, 
+              title: "Rights Governance", 
+              desc: "Lyric forced aligner, escrow desk & 100% catalog ownership guaranteed by protocol.", 
+              color: "bg-cyan-50 text-cyan-600" 
+            },
           ].map((pillar, i) => (
             <div key={i} className="p-8 bg-white rounded-[2rem] border border-zinc-100 shadow-sm hover:shadow-xl transition-all group">
               <div className={`w-14 h-14 rounded-2xl ${pillar.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
