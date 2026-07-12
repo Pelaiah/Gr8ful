@@ -7,8 +7,8 @@ import { cn } from '@/lib/utils';
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'SonicFlow',
-  description: 'Your music, your style.',
+  title: 'Gr8ful | Creator ERP',
+  description: 'The autonomous operating system for independent artists and their fans.',
 };
 
 export default function RootLayout({
@@ -17,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={cn("font-sans", inter.variable)} suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className={cn("font-sans antialiased", inter.variable)} suppressHydrationWarning>
         {children}
         <Toaster />
       </body>

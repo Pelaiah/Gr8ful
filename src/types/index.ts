@@ -1,12 +1,30 @@
 export type Track = {
-  id: number;
+  id: string;
+  artistId: string;
   title: string;
-  artist: string;
   album: string;
-  albumArtUrl: string;
-  lyrics: string;
-  duration: number; // in seconds
   audioUrl: string;
+  duration: number;
+  lyrics?: TimedLyric[];
 };
 
-export type RepeatMode = 'off' | 'one' | 'all';
+export type TimedLyric = {
+  word: string;
+  start: number;
+  end: number;
+};
+
+export type UserRole = 'artist' | 'fan';
+
+export type OnboardingLevel = 1 | 2 | 3 | 4;
+
+export type ArtistProfile = {
+  uid: string;
+  slug: string;
+  onboardingLevel: OnboardingLevel;
+  metrics: {
+    streams: number;
+    fans: number;
+    revenueCents: number;
+  };
+};
