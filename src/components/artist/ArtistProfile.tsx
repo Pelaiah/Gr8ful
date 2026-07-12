@@ -9,7 +9,11 @@ import {
   Globe, 
   Info, 
   UserCheck, 
-  Plus
+  Plus,
+  Instagram,
+  Facebook,
+  Youtube,
+  Music
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -23,6 +27,12 @@ interface ArtistProfileProps {
   bannerUrl: string;
   onClose?: () => void;
 }
+
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.6-4.12-1.31a6.342 6.342 0 0 1-1.89-1.51v7.53c.01 4.76-4.03 8.67-8.87 8.14-5.257-.57-8.82-5.91-7.07-10.83 1.25-3.51 5.25-5.51 8.78-4.34.81.27 1.54.74 2.11 1.35.03-3.003.01-6.007.01-9.007l.15-.02z"/>
+  </svg>
+);
 
 const Badge = ({ icon: Icon, label, colorClass, shapeClass }: { icon: any, label: string, colorClass: string, shapeClass: string }) => (
   <div className="flex flex-col items-center gap-1">
@@ -137,6 +147,25 @@ export default function ArtistProfile({
         <p className="text-sm font-medium text-white/70 max-w-[240px] leading-relaxed mb-6">
           independent artist / producer<br/>autonomy is everything
         </p>
+
+        {/* Social Links Bar */}
+        <div className="flex gap-5 mb-8 bg-white/5 backdrop-blur-xl px-8 py-3.5 rounded-full border border-white/10">
+          <button className="text-white/40 hover:text-white transition-all transform hover:scale-110">
+            <Music className="w-5 h-5" />
+          </button>
+          <button className="text-white/40 hover:text-white transition-all transform hover:scale-110">
+            <Instagram className="w-5 h-5" />
+          </button>
+          <button className="text-white/40 hover:text-white transition-all transform hover:scale-110">
+            <TikTokIcon className="w-5 h-5" />
+          </button>
+          <button className="text-white/40 hover:text-white transition-all transform hover:scale-110">
+            <Youtube className="w-5 h-5" />
+          </button>
+          <button className="text-white/40 hover:text-white transition-all transform hover:scale-110">
+            <Facebook className="w-5 h-5" />
+          </button>
+        </div>
 
         {/* Small Action Buttons */}
         <div className="flex gap-2 mb-8">
