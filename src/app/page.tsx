@@ -7,7 +7,7 @@ import AudiencePortal from '@/components/audience/AudiencePortal';
 import TicketCard from '@/components/ui/TicketCard';
 import ProductCard from '@/components/merch/ProductCard';
 import { Button } from '@/components/ui/button';
-import { Rocket, Ticket, ShoppingBag, User, Users, ShieldCheck } from 'lucide-react';
+import { Rocket, Ticket, ShoppingBag, User, Users, ShieldCheck, Zap, BarChart3, Globe } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from '@/lib/utils';
 
@@ -109,6 +109,38 @@ export default function Home() {
                    <Button size="lg" className="rounded-full h-14 px-8 font-black text-lg bg-zinc-900" onClick={() => setShowOnboarding(true)}>
                      <Rocket className="mr-2 w-5 h-5" /> Start Onboarding
                    </Button>
+                 </div>
+
+                 {/* The 4 Pillars Summary */}
+                 <div className="grid grid-cols-2 gap-4 pt-12">
+                    <div className="p-5 bg-white rounded-3xl border border-zinc-100 shadow-sm space-y-2">
+                        <div className="w-8 h-8 rounded-full bg-purple-50 flex items-center justify-center">
+                            <Zap size={16} className="text-purple-600" />
+                        </div>
+                        <h4 className="font-black text-xs uppercase tracking-tight">Campaign Engine</h4>
+                        <p className="text-[10px] text-zinc-400 font-medium leading-relaxed">Automated rollouts, pre-save funnels & smart budget mapping.</p>
+                    </div>
+                    <div className="p-5 bg-white rounded-3xl border border-zinc-100 shadow-sm space-y-2">
+                        <div className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center">
+                            <Globe size={16} className="text-pink-600" />
+                        </div>
+                        <h4 className="font-black text-xs uppercase tracking-tight">Identity Sync</h4>
+                        <p className="text-[10px] text-zinc-400 font-medium leading-relaxed">Omni-channel scheduling across TikTok, Instagram & YouTube.</p>
+                    </div>
+                    <div className="p-5 bg-white rounded-3xl border border-zinc-100 shadow-sm space-y-2">
+                        <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
+                            <BarChart3 size={16} className="text-blue-600" />
+                        </div>
+                        <h4 className="font-black text-xs uppercase tracking-tight">Deep Analytics</h4>
+                        <p className="text-[10px] text-zinc-400 font-medium leading-relaxed">Cross-platform growth maps & granular audience demographics.</p>
+                    </div>
+                    <div className="p-5 bg-white rounded-3xl border border-zinc-100 shadow-sm space-y-2">
+                        <div className="w-8 h-8 rounded-full bg-cyan-50 flex items-center justify-center">
+                            <ShieldCheck size={16} className="text-cyan-600" />
+                        </div>
+                        <h4 className="font-black text-xs uppercase tracking-tight">Rights Management</h4>
+                        <p className="text-[10px] text-zinc-400 font-medium leading-relaxed">Lyric forced aligner, escrow desk & 100% catalog ownership.</p>
+                    </div>
                  </div>
                </div>
                
