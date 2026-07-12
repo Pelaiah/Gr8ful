@@ -9,7 +9,8 @@ import {
   LayoutGrid,
   Users,
   Eye,
-  Clock
+  Clock,
+  Music
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -192,6 +193,9 @@ export default function AudiencePortal({ onSelectArtist }: { onSelectArtist: (ar
         </button>
         <button className="text-white/40 hover:text-white transition-colors">
           <Search size={24} />
+        </button>
+        <button className="text-white/40 hover:text-white transition-colors">
+          <Music size={24} />
         </button>
         <button className="text-white/40 hover:text-white transition-colors">
           <Bell size={24} />
