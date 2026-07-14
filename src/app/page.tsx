@@ -52,6 +52,7 @@ export default function Home() {
           avatarUrl={selectedArtist.avatarUrl}
           bannerUrl={selectedArtist.bannerUrl}
           onClose={() => setSelectedArtist(null)}
+          isEditable={portalMode === 'artist'}
         />
       );
     }

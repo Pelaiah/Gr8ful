@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   X, 
   MoreHorizontal, 
@@ -12,10 +12,14 @@ import {
   Instagram,
   Facebook,
   Youtube,
-  Play
+  Play,
+  Camera,
+  Edit2,
+  Settings2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 
 interface ArtistProfileProps {
   name: string;
@@ -23,6 +27,7 @@ interface ArtistProfileProps {
   followers: string;
   avatarUrl: string;
   bannerUrl: string;
+  isEditable?: boolean;
   onClose?: () => void;
 }
 
@@ -92,8 +97,10 @@ export default function ArtistProfile({
   followers,
   avatarUrl,
   bannerUrl,
+  isEditable = false,
   onClose
 }: ArtistProfileProps) {
+  const { toast } = useToast();
   const catalog = [
     { title: "Midnight Echoes", artist: name, duration: "3:42", imageUrl: "https://picsum.photos/seed/track1/100/100" },
     { title: "Neon Voyage", artist: name, duration: "2:58", imageUrl: "https://picsum.photos/seed/track2/100/100" },
@@ -102,8 +109,15 @@ export default function ArtistProfile({
     { title: "Winds of Destiny", artist: name, duration: "3:55", imageUrl: "https://picsum.photos/seed/track5/100/100" },
   ];
 
+  const handleEditMedia = (type: 'banner' | 'avatar') => {
+    toast({
+      title: "Initialize Media Vault",
+      description: `Connecting to secure asset manager for ${type} update...`,
+    });
+  };
+
   return (
-    <div className="relative w-full min-h-screen bg-black text-white">
+    <div className="relative w-full min-h-screen bg-black text-white overflow-x-hidden">
       {/* Background Layer (Fixed) */}
       <div className="fixed inset-0 z-0">
         <img 
@@ -113,10 +127,21 @@ export default function ArtistProfile({
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80"></div>
         <div className="absolute inset-0 backdrop-blur-[2px]"></div>
+
+        {isEditable && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <Button 
+              onClick={() => handleEditMedia('banner')}
+              className="pointer-events-auto bg-black/40 backdrop-blur-md border border-white/20 hover:bg-black/60 rounded-full h-12 px-6 font-black uppercase tracking-tighter text-xs"
+            >
+              <Camera size={16} className="mr-2" /> Change Banner Asset
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Header Navigation (Fixed on top) */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-6 pt-8 bg-gradient-to-b from-black/40 to-transparent">
+      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-6 pt-8 bg-gradient-to-b from-black/60 to-transparent">
         <Button 
           variant="ghost" 
           size="icon" 
@@ -125,7 +150,12 @@ export default function ArtistProfile({
         >
           <X className="w-5 h-5" />
         </Button>
-        <span className="text-sm font-medium text-white/80 tracking-tight">gr8ful.app/@{handle}</span>
+        <div className="flex flex-col items-center">
+          <span className="text-sm font-medium text-white/80 tracking-tight">gr8ful.app/@{handle}</span>
+          {isEditable && (
+            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-cyan-400 bg-cyan-400/10 px-2 py-0.5 rounded-full mt-1">Monitor Mode</span>
+          )}
+        </div>
         <Button variant="ghost" size="icon" className="rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20">
           <MoreHorizontal className="w-5 h-5" />
         </Button>
@@ -162,12 +192,26 @@ export default function ArtistProfile({
           </div>
 
           {/* Profile Details */}
-          <div className="w-40 h-40 rounded-full border-4 border-white/10 overflow-hidden shadow-2xl mb-8 relative shrink-0">
-            <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 ring-1 ring-inset ring-white/20 rounded-full"></div>
+          <div className="relative group mb-8">
+            <div className="w-40 h-40 rounded-full border-4 border-white/10 overflow-hidden shadow-2xl relative shrink-0">
+              <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 ring-1 ring-inset ring-white/20 rounded-full"></div>
+            </div>
+            {isEditable && (
+              <button 
+                onClick={() => handleEditMedia('avatar')}
+                className="absolute inset-0 bg-black/60 rounded-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border-2 border-dashed border-white/20"
+              >
+                <Camera size={24} className="mb-1" />
+                <span className="text-[10px] font-black uppercase">Edit Photo</span>
+              </button>
+            )}
           </div>
 
-          <h1 className="text-5xl lg:text-7xl font-black tracking-tighter mb-2">{name}</h1>
+          <h1 className="text-5xl lg:text-7xl font-black tracking-tighter mb-2 flex items-center gap-4">
+            {name}
+            {isEditable && <Edit2 size={24} className="text-white/20 cursor-pointer hover:text-white transition-colors" />}
+          </h1>
           <div className="flex gap-4 text-sm lg:text-base font-bold text-white/60 mb-8">
             <span>{followers} Followers</span>
             <div className="w-1 h-1 rounded-full bg-white/20 self-center"></div>
@@ -199,7 +243,7 @@ export default function ArtistProfile({
             </button>
           </div>
 
-          {/* Small Action Buttons */}
+          {/* Action Buttons */}
           <div className="flex gap-4 mb-12">
             <Button variant="secondary" className="h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-sm font-black uppercase hover:bg-white/20 px-8">
               <Info className="w-4 h-4 mr-2" /> About
@@ -231,9 +275,15 @@ export default function ArtistProfile({
           </div>
 
           {/* Primary Action Button */}
-          <Button className="w-full max-w-md h-20 rounded-[32px] bg-white/10 backdrop-blur-xl border border-white/20 text-white font-black text-2xl hover:bg-white/20 transition-all flex items-center justify-center gap-4 mb-20">
-            <UserCheck className="w-8 h-8" /> Follow
-          </Button>
+          {isEditable ? (
+            <Button className="w-full max-w-md h-20 rounded-[32px] bg-white text-black font-black text-2xl hover:bg-white/90 transition-all flex items-center justify-center gap-4 mb-20">
+              <Settings2 className="w-8 h-8" /> Artist Settings
+            </Button>
+          ) : (
+            <Button className="w-full max-w-md h-20 rounded-[32px] bg-white/10 backdrop-blur-xl border border-white/20 text-white font-black text-2xl hover:bg-white/20 transition-all flex items-center justify-center gap-4 mb-20">
+              <UserCheck className="w-8 h-8" /> Follow
+            </Button>
+          )}
 
           {/* Catalog Section */}
           <div className="w-full text-left space-y-8 pb-12">
