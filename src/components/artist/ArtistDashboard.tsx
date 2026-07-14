@@ -32,7 +32,7 @@ import {
   Layers,
   Settings,
   Users,
-  PieChart,
+  PieChart as PieChartIcon,
   FileText,
   ShieldCheck,
   Send,
@@ -59,7 +59,8 @@ import {
   BarChart,
   Bar,
   Cell,
-  Pie
+  Pie,
+  PieChart
 } from "recharts";
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -86,8 +87,20 @@ const streamData = [
   { name: 'Jun 9', value: 70 },
 ];
 
-const sparklineData = [
-  { value: 400 }, { value: 300 }, { value: 500 }, { value: 450 }, { value: 600 }, { value: 550 }, { value: 700 }
+const audienceAgeData = [
+  { label: "18 - 24", value: 34 },
+  { label: "25 - 34", value: 38 },
+  { label: "35 - 44", value: 17 },
+  { label: "45 - 54", value: 7 },
+  { label: "55+", value: 4 },
+];
+
+const countryData = [
+  { name: "Brazil", value: 18.7, color: "#3b82f6" },
+  { name: "USA", value: 12.5, color: "#6366f1" },
+  { name: "Mexico", value: 6.9, color: "#10b981" },
+  { name: "UK", value: 4.8, color: "#8b5cf6" },
+  { name: "Other", value: 57.1, color: "#3f3f46" },
 ];
 
 const recentReleases = [
@@ -406,6 +419,87 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
                   </Button>
                 </div>
 
+              </div>
+
+              {/* Audience Row */}
+              <div className="glass-card rounded-[2.5rem] p-8 border-white/5 space-y-8">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div>
+                    <h3 className="text-xl font-bold">Audience</h3>
+                  </div>
+                  <Tabs defaultValue="age" className="w-full md:w-auto">
+                    <TabsList className="bg-white/5 border border-white/10 p-1 h-auto">
+                      {['Age', 'Country', 'Gender', 'Devices', 'Cities'].map((tab) => (
+                        <TabsTrigger 
+                          key={tab} 
+                          value={tab.toLowerCase()} 
+                          className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-[10px] font-bold uppercase tracking-widest h-8 px-4"
+                        >
+                          {tab}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+                  </Tabs>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                  {/* Age Breakdown */}
+                  <div className="space-y-6">
+                    {audienceAgeData.map((age, i) => (
+                      <div key={i} className="flex items-center gap-4">
+                        <span className="text-[11px] font-bold text-white/40 w-16">{age.label}</span>
+                        <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-blue-600 rounded-full transition-all duration-1000" 
+                            style={{ width: `${age.value}%` }}
+                          ></div>
+                        </div>
+                        <span className="text-xs font-black w-10 text-right">{age.value}%</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Top Country Chart */}
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-12 p-4 bg-white/[0.02] rounded-[2rem] border border-white/[0.05]">
+                    <div className="relative w-48 h-48">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={countryData}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={60}
+                            outerRadius={80}
+                            paddingAngle={5}
+                            dataKey="value"
+                            stroke="none"
+                          >
+                            {countryData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                        </PieChart>
+                      </ResponsiveContainer>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                        <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Top Country</span>
+                        <span className="text-xl font-black">Brazil</span>
+                        <span className="text-xs font-bold text-blue-500">18.7%</span>
+                      </div>
+                    </div>
+
+                    <div className="flex-1 space-y-4 w-full md:w-auto">
+                      {countryData.map((country, i) => (
+                        <div key={i} className="flex items-center justify-between group">
+                          <div className="flex items-center gap-3">
+                            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: country.color }}></div>
+                            <span className="text-xs font-bold text-white/80">{country.name}</span>
+                          </div>
+                          <span className="text-xs font-black text-white/40 group-hover:text-white transition-colors">{country.value}%</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div>
