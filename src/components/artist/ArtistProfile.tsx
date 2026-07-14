@@ -106,7 +106,7 @@ export default function ArtistProfile({
   ];
 
   return (
-    <div className="relative w-full max-w-md mx-auto overflow-hidden bg-black text-white h-[90vh] rounded-[48px] shadow-2xl border-[8px] border-zinc-900">
+    <div className="relative w-full mx-auto overflow-hidden bg-black text-white rounded-[2.5rem] shadow-2xl h-[800px]">
       {/* Background Layer (Fixed) */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -119,7 +119,7 @@ export default function ArtistProfile({
       </div>
 
       {/* Header Navigation (Fixed on top) */}
-      <div className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between p-6 pt-12 bg-gradient-to-b from-black/40 to-transparent">
+      <div className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between p-6 pt-8 bg-gradient-to-b from-black/40 to-transparent">
         <Button 
           variant="ghost" 
           size="icon" 
