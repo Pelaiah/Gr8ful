@@ -36,7 +36,11 @@ import {
   FileText,
   ShieldCheck,
   Send,
-  Video
+  Video,
+  ExternalLink,
+  Sparkles,
+  Smartphone,
+  Info
 } from 'lucide-react';
 import { 
   ChartContainer, 
@@ -71,7 +75,7 @@ interface ArtistDashboardProps {
 
 type ArtistTab = 'analytics' | 'releases' | 'planner' | 'escrow';
 
-// Mock Data
+// Mock Data for Analytics
 const streamData = [
   { name: 'Apr 28', value: 30 },
   { name: 'May 5', value: 45 },
@@ -86,6 +90,44 @@ const sparklineData = [
   { value: 400 }, { value: 300 }, { value: 500 }, { value: 450 }, { value: 600 }, { value: 550 }, { value: 700 }
 ];
 
+const recentReleases = [
+  { title: "Hurry Up Tomorrow", type: "Album", date: "Feb 2, 2025", streams: "152M", saveRate: "12.4%", image: "https://picsum.photos/seed/weeknd1/200/200" },
+  { title: "Dancing In The Flames", type: "Single", date: "Jan 5, 2025", streams: "89.3M", saveRate: "15.2%", image: "https://picsum.photos/seed/weeknd2/200/200" },
+  { title: "Timeless", type: "Single", date: "Nov 15, 2024", streams: "120M", saveRate: "13.1%", image: "https://picsum.photos/seed/weeknd3/200/200" },
+];
+
+const topSources = [
+  { name: "Spotify", total: "1.45B", growth: "+13.4%", color: "bg-green-500", icon: Music },
+  { name: "Apple Music", total: "456M", growth: "+8.7%", color: "bg-pink-500", icon: Music },
+  { name: "YouTube", total: "312M", growth: "+11.2%", color: "bg-red-500", icon: Youtube },
+  { name: "TikTok", total: "98M", growth: "+22.1%", color: "bg-black border border-white/10", icon: Video },
+  { name: "Amazon Music", total: "67M", growth: "+9.3%", color: "bg-blue-500", icon: Music },
+];
+
+const socialMetrics = [
+  { platform: "Instagram", followers: "12.4M", growth: "+11.2%", icon: Instagram, color: "text-pink-500" },
+  { platform: "TikTok", followers: "8.7M", growth: "+38.4%", icon: Music, color: "text-white" },
+  { platform: "YouTube", followers: "5.3M", growth: "+7.1%", icon: Youtube, color: "text-red-500" },
+  { platform: "X (Twitter)", followers: "2.1M", growth: "+3.2%", icon: Twitter, color: "text-blue-400" },
+  { platform: "Facebook", followers: "1.8M", growth: "+2.1%", icon: Facebook, color: "text-blue-600" },
+];
+
+const activityLogs = [
+  { event: "New playlist placement", detail: "\"Today's Top Hits\" • Spotify", time: "2h ago", icon: Music, iconColor: "text-green-500" },
+  { event: "TikTok video reached 120k views", detail: "\"Behind The Scenes\"", time: "5h ago", icon: Music, iconColor: "text-white" },
+  { event: "Instagram engagement increased", detail: "+12% from last week", time: "1d ago", icon: Instagram, iconColor: "text-pink-500" },
+  { event: "New release delivered", detail: "\"Hurry Up Tomorrow\"", time: "2d ago", icon: Send, iconColor: "text-blue-500" },
+  { event: "YouTube Music feature", detail: "Added to \"New Music Mix\"", time: "3d ago", icon: Youtube, iconColor: "text-red-500" },
+];
+
+const aiInsights = [
+  { text: "Your TikTok engagement increased 38% after posting behind-the-scenes videos.", icon: Music, color: "text-blue-400" },
+  { text: "Spotify streams usually spike 48 hours after Instagram posts.", icon: Music, color: "text-green-500" },
+  { text: "Most listeners come from Brazil. Consider targeting São Paulo in your next tour.", icon: MapPin, color: "text-yellow-500" },
+  { text: "Best day to release music is Friday. Your audience is most active on Fridays.", icon: CalendarIcon, color: "text-purple-400" },
+  { text: "Your newest single is outperforming your previous release by 27%.", icon: TrendingUp, color: "text-orange-400" },
+];
+
 const chartConfig = {
   value: {
     label: "Streams",
@@ -97,9 +139,9 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
   const [activeTab, setActiveTab] = useState<ArtistTab>('analytics');
 
   return (
-    <main className="min-h-screen bg-[#0A0A0B] text-white flex overflow-hidden">
+    <main className="min-h-screen bg-[#0A0A0B] text-white flex overflow-hidden font-sans">
       
-      {/* Sidebar - Desktop (Synced with Bottom Nav) */}
+      {/* Sidebar - Desktop */}
       <aside className="w-64 border-r border-white/5 bg-[#0A0A0B] flex flex-col shrink-0 hidden lg:flex">
         <div className="p-6 flex items-center gap-3">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center rotate-45">
@@ -150,9 +192,8 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20 w-4 h-4" />
                 <input 
                   placeholder="Search metadata or analytics..." 
-                  className="bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm w-64 focus:outline-none focus:ring-1 focus:ring-blue-500/50" 
+                  className="bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm w-64 focus:outline-none focus:ring-1 focus:ring-blue-500/50 text-white" 
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-white/20 font-mono">⌘ K</span>
               </div>
               <Button variant="ghost" size="icon" className="relative text-white/60 hover:text-white">
                 <Bell size={20} />
@@ -168,24 +209,122 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
         <div className="p-8 space-y-8 max-w-[1600px] mx-auto w-full pb-32">
           
           {activeTab === 'analytics' && (
-            <>
-              {/* Analytics Tab (Control Center) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <StatCard label="Live Stream Count" value="83.4M" trend="+12.7%" color="text-blue-500" />
-                <StatCard label="Follower Base" value="24.8M" trend="+14.2%" color="text-purple-500" />
-                <StatCard label="Wallet Balance" value="$1.24M" trend="+9.3%" color="text-orange-500" />
-                <StatCard label="Audience Conversion" value="8.2%" trend="+8.2%" color="text-teal-500" />
+            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              
+              {/* Top Row: Releases, Activity, Social */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                {/* Recent Releases */}
+                <div className="glass-card rounded-[2.5rem] p-6 border-white/5 space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold uppercase tracking-widest text-white/60">Recent Releases</h3>
+                    <button className="text-[10px] font-bold uppercase tracking-widest text-blue-500 hover:text-blue-400 transition-colors">View All</button>
+                  </div>
+                  <div className="space-y-5">
+                    {recentReleases.map((release, i) => (
+                      <div key={i} className="flex items-center gap-4 group cursor-pointer">
+                        <div className="w-14 h-14 rounded-xl overflow-hidden border border-white/10 flex-shrink-0">
+                          <img src={release.image} alt={release.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-bold truncate">{release.title}</h4>
+                          <p className="text-[10px] text-white/40 uppercase font-black">{release.type} • {release.date}</p>
+                          <div className="flex items-center gap-4 mt-1">
+                            <div>
+                              <span className="text-[10px] text-white/40 uppercase block">Streams</span>
+                              <span className="text-xs font-bold">{release.streams}</span>
+                            </div>
+                            <div>
+                              <span className="text-[10px] text-white/40 uppercase block">Save Rate</span>
+                              <span className="text-xs font-bold">{release.saveRate}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="bg-green-500/10 border border-green-500/20 rounded-full px-2 py-1 flex items-center gap-1">
+                          <div className="w-1 h-1 rounded-full bg-green-500 animate-pulse"></div>
+                          <span className="text-[8px] font-black uppercase text-green-500 tracking-tighter">Live Everywhere</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Latest Activity */}
+                <div className="glass-card rounded-[2.5rem] p-6 border-white/5 space-y-6">
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-white/60">Latest Activity</h3>
+                  <div className="space-y-6 relative">
+                    <div className="absolute left-[1.125rem] top-2 bottom-2 w-px bg-white/5"></div>
+                    {activityLogs.map((log, i) => (
+                      <div key={i} className="flex gap-4 relative">
+                        <div className={cn("w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 z-10", log.iconColor)}>
+                          <log.icon size={16} />
+                        </div>
+                        <div className="flex-1 min-w-0 pt-0.5">
+                          <div className="flex items-center justify-between">
+                            <h4 className="text-xs font-bold truncate">{log.event}</h4>
+                            <span className="text-[9px] font-bold text-white/20 uppercase whitespace-nowrap">{log.time}</span>
+                          </div>
+                          <p className="text-[10px] text-white/40 truncate mt-0.5">{log.detail}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Social Overview */}
+                <div className="glass-card rounded-[2.5rem] p-6 border-white/5 space-y-6">
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-white/60">Social Overview</h3>
+                  <div className="space-y-4">
+                    {socialMetrics.map((social, i) => (
+                      <div key={i} className="flex items-center justify-between group cursor-pointer hover:bg-white/5 p-2 -mx-2 rounded-xl transition-colors">
+                        <div className="flex items-center gap-3">
+                          <div className={cn("w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center", social.color)}>
+                            <social.icon size={16} />
+                          </div>
+                          <span className="text-xs font-bold">{social.platform}</span>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-xs font-bold">{social.followers}</div>
+                          <div className="text-[9px] font-black uppercase text-green-500 flex items-center gap-0.5 justify-end">
+                            <TrendingUp size={10} /> {social.growth}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <Button variant="ghost" className="w-full rounded-2xl border border-white/5 h-12 text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white mt-2">
+                    View Social Analytics <ArrowUpRight size={14} className="ml-2" />
+                  </Button>
+                </div>
+
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 glass-card rounded-[2.5rem] p-8 border-white/5 space-y-8">
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              {/* Middle Row: Streams Overview & AI Insights */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                {/* Streams Overview */}
+                <div className="lg:col-span-2 glass-card rounded-[2.5rem] p-8 border-white/5 space-y-8 flex flex-col">
+                  <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg font-bold">Social-to-Stream Telemetry</h3>
-                      <p className="text-xs text-white/40">Correlation between social spikes and listening conversions</p>
+                      <h3 className="text-lg font-bold">Streams Overview</h3>
+                      <p className="text-xs text-white/40">Real-time listening performance across all platforms</p>
+                    </div>
+                    <div className="flex gap-1 bg-white/5 p-1 rounded-xl">
+                      {['7D', '30D', '90D', '1Y'].map(range => (
+                        <button 
+                          key={range} 
+                          className={cn(
+                            "px-3 py-1.5 rounded-lg text-[10px] font-black transition-all",
+                            range === '30D' ? "bg-blue-600 text-white" : "text-white/40 hover:text-white"
+                          )}
+                        >
+                          {range}
+                        </button>
+                      ))}
                     </div>
                   </div>
-                  <div className="h-[350px] w-full">
+                  
+                  <div className="h-[300px] w-full">
                     <ChartContainer config={chartConfig} className="h-full w-full">
                       <ResponsiveContainer width="100%" height="100%">
                         <AreaChart data={streamData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -222,66 +361,58 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
                       </ResponsiveContainer>
                     </ChartContainer>
                   </div>
+
+                  {/* Top Sources Integrated */}
+                  <div className="pt-8 border-t border-white/5 mt-auto">
+                    <div className="flex items-center justify-between mb-6">
+                      <h4 className="text-xs font-bold uppercase tracking-widest text-white/40">Top Sources</h4>
+                      <button className="text-[10px] font-bold text-blue-500 uppercase">View All</button>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+                      {topSources.map((source, i) => (
+                        <div key={i} className="space-y-1.5">
+                          <div className="flex items-center gap-2">
+                            <div className={cn("w-2 h-2 rounded-sm", source.color)}></div>
+                            <span className="text-[10px] font-bold text-white/60">{source.name}</span>
+                          </div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-sm font-black">{source.total}</span>
+                            <span className="text-[9px] font-bold text-green-500 uppercase">{source.growth}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
-                <div className="glass-card rounded-[2.5rem] p-8 border-white/5 flex flex-col justify-between">
-                   <div className="space-y-6">
-                      <h3 className="text-lg font-bold">KYC Revenue Summary</h3>
-                      <div className="p-6 bg-white/5 rounded-3xl border border-white/10 space-y-4">
-                         <div className="flex items-center justify-between">
-                            <span className="text-xs text-white/40 font-bold uppercase tracking-widest">Available Funds</span>
-                            <Badge variant="outline" className="text-green-500 border-green-500/20 text-[8px] bg-green-500/5">Secured</Badge>
-                         </div>
-                         <h2 className="text-4xl font-black">$412,890.12</h2>
-                         <div className="space-y-2">
-                            <div className="flex justify-between text-[10px] font-bold">
-                               <span className="text-white/40">From Merch</span>
-                               <span>$82,341</span>
-                            </div>
-                            <div className="flex justify-between text-[10px] font-bold">
-                               <span className="text-white/40">From Tickets</span>
-                               <span>$156,220</span>
-                            </div>
-                            <div className="flex justify-between text-[10px] font-bold">
-                               <span className="text-white/40">From Beat Licensing</span>
-                               <span>$174,329</span>
-                            </div>
-                         </div>
+                {/* AI Insights */}
+                <div className="glass-card rounded-[2.5rem] p-8 border-white/5 space-y-8 flex flex-col">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-bold">AI Insights</h3>
+                    <Badge variant="outline" className="text-[8px] h-4 uppercase tracking-widest text-white/40 border-white/10">Beta</Badge>
+                  </div>
+                  <div className="space-y-6 flex-1">
+                    {aiInsights.map((insight, i) => (
+                      <div key={i} className="flex gap-4 group cursor-pointer">
+                        <div className={cn("w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform", insight.color)}>
+                          <insight.icon size={20} />
+                        </div>
+                        <p className="text-xs font-medium text-white/80 leading-relaxed pt-1">{insight.text}</p>
                       </div>
-                   </div>
-                   <Button className="w-full h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-widest text-xs mt-6">
-                      Withdraw to Wallet <ArrowUpRight size={14} className="ml-2" />
-                   </Button>
+                    ))}
+                  </div>
+                  <Button variant="ghost" className="w-full rounded-2xl border border-white/5 h-14 text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white">
+                    View All Insights <ArrowUpRight size={14} className="ml-2" />
+                  </Button>
                 </div>
+
               </div>
 
-              <div className="glass-card rounded-[2.5rem] p-8 border-white/5 space-y-8">
-                 <div className="flex justify-between items-center">
-                    <h3 className="text-lg font-bold">Geographic Fan Heatmap</h3>
-                    <p className="text-xs text-white/40">Optimal tour routing based on density</p>
-                 </div>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-6">
-                       <HeatmapItem label="São Paulo, Brazil" value="1.2M listeners" percent={92} />
-                       <HeatmapItem label="New York, USA" value="840k listeners" percent={78} />
-                       <HeatmapItem label="London, UK" value="620k listeners" percent={65} />
-                       <HeatmapItem label="Mexico City, MX" value="510k listeners" percent={58} />
-                    </div>
-                    <div className="flex items-center justify-center">
-                       <div className="relative w-64 h-64 flex items-center justify-center">
-                          <div className="absolute inset-0 bg-blue-600/20 blur-[100px] rounded-full"></div>
-                          <Globe size={180} className="text-blue-600/20" />
-                          <div className="absolute top-1/4 right-1/4 w-4 h-4 bg-blue-500 rounded-full animate-ping"></div>
-                          <div className="absolute bottom-1/3 left-1/3 w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                       </div>
-                    </div>
-                 </div>
-              </div>
-            </>
+            </div>
           )}
 
           {activeTab === 'releases' && (
-            <>
+            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
               {/* Release Studio Tab */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                  <div className="lg:col-span-2 space-y-8">
@@ -352,11 +483,11 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
                     </div>
                  </div>
               </div>
-            </>
+            </div>
           )}
 
           {activeTab === 'planner' && (
-            <>
+            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
               {/* Content & Live Planner Tab */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                  <div className="lg:col-span-2 glass-card rounded-[2.5rem] p-8 border-white/5 space-y-8">
@@ -368,8 +499,8 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
                        </div>
                     </div>
                     <div className="grid grid-cols-7 gap-2">
-                       {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
-                         <div key={i} className="text-center text-[10px] font-black text-white/20 pb-2">{d}</div>
+                       {['M', 'T', 'W', 'Th', 'F', 'S', 'Su'].map((d, i) => (
+                         <div key={`${d}-${i}`} className="text-center text-[10px] font-black text-white/20 pb-2">{d}</div>
                        ))}
                        {[...Array(28)].map((_, i) => (
                          <div key={i} className={cn(
@@ -429,11 +560,11 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
                     </div>
                  </div>
               </div>
-            </>
+            </div>
           )}
 
           {activeTab === 'escrow' && (
-            <>
+            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
               {/* Collaboration & Rights Tab */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                  <div className="lg:col-span-2 space-y-8">
@@ -505,7 +636,7 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
                     </div>
                  </div>
               </div>
-            </>
+            </div>
           )}
 
         </div>
@@ -564,36 +695,6 @@ function PlatformRow({ label, status, statusColor }: { label: string, status: st
       <div className="flex items-center gap-2">
          <span className={statusColor}>{status}</span>
          {status === 'Live' && <div className="w-1 h-1 rounded-full bg-green-500"></div>}
-      </div>
-    </div>
-  );
-}
-
-function StatCard({ label, value, trend, color }: { label: string, value: string, trend: string, color: string }) {
-  return (
-    <div className="glass-card rounded-[2rem] p-6 border-white/5 space-y-4 relative overflow-hidden group">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-700"></div>
-      <div className="space-y-1">
-        <h4 className="text-[10px] font-black uppercase tracking-widest text-white/40">{label}</h4>
-        <div className="flex items-baseline justify-between">
-          <span className="text-2xl font-black">{value}</span>
-          <span className={cn("text-[10px] font-black uppercase flex items-center gap-1", trend.startsWith('+') ? 'text-green-500' : 'text-red-500')}>
-            {trend.startsWith('+') ? <TrendingUp size={12} /> : null} {trend}
-          </span>
-        </div>
-      </div>
-      <div className="h-12 w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={sparklineData}>
-            <Area 
-              type="monotone" 
-              dataKey="value" 
-              stroke={color.includes('blue') ? '#3b82f6' : color.includes('purple') ? '#8b5cf6' : color.includes('orange') ? '#f97316' : '#14b8a6'} 
-              strokeWidth={2} 
-              fillOpacity={0} 
-            />
-          </AreaChart>
-        </ResponsiveContainer>
       </div>
     </div>
   );
