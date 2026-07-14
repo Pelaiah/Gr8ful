@@ -15,7 +15,10 @@ import {
   Play,
   Camera,
   Edit2,
-  Settings2
+  Settings2,
+  Disc,
+  Music,
+  BarChart3
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -74,20 +77,55 @@ const SocialCard = ({ title, avatars, count }: { title: string, avatars: string[
   </div>
 );
 
-const CatalogItem = ({ index, title, artist, duration, imageUrl }: { index: number, title: string, artist: string, duration: string, imageUrl: string }) => (
-  <div className="w-full flex items-center gap-4 group cursor-pointer">
-    <span className="text-white/30 text-xs font-bold w-4">{index}</span>
-    <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-white/10">
+const CatalogItem = ({ index, title, plays, duration, imageUrl }: { index: number, title: string, plays: string, duration: string, imageUrl: string }) => (
+  <div className="w-full flex items-center gap-4 group cursor-pointer hover:bg-white/5 p-2 rounded-2xl transition-all">
+    <span className="text-white/20 text-[10px] font-black w-4">{index}</span>
+    <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-white/10 shadow-lg shrink-0">
       <img src={imageUrl} alt={title} className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
         <Play size={16} fill="white" className="text-white" />
       </div>
     </div>
     <div className="flex-1 min-w-0 text-left">
-      <h4 className="text-sm font-bold truncate">{title}</h4>
-      <p className="text-[10px] font-medium text-white/50 truncate uppercase tracking-tighter">{artist}</p>
+      <h4 className="text-sm font-bold truncate text-white/90">{title}</h4>
+      <div className="flex items-center gap-3 mt-1">
+         <div className="flex items-center gap-1">
+            <Play size={10} className="text-white/40 fill-white/40" />
+            <span className="text-[9px] font-black text-white/40 uppercase tracking-tighter">{plays} plays</span>
+         </div>
+         <div className="w-0.5 h-0.5 rounded-full bg-white/20"></div>
+         <span className="text-[9px] font-black text-white/40 uppercase tracking-tighter">{duration}</span>
+      </div>
     </div>
-    <span className="text-[10px] font-bold text-white/30">{duration}</span>
+    <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+       <BarChart3 size={14} className="text-white/40" />
+    </div>
+  </div>
+);
+
+const CatalogSection = ({ title, icon: Icon, items }: { title: string, icon: any, items: any[] }) => (
+  <div className="space-y-6">
+    <div className="flex items-center justify-between border-b border-white/10 pb-4">
+      <div className="flex items-center gap-3">
+         <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/40">
+            <Icon size={20} />
+         </div>
+         <h3 className="text-2xl font-black uppercase tracking-tighter">{title}</h3>
+      </div>
+      <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">{items.length} Releases</span>
+    </div>
+    <div className="grid grid-cols-1 gap-2">
+      {items.map((item, idx) => (
+        <CatalogItem 
+          key={idx}
+          index={idx + 1}
+          title={item.title}
+          plays={item.plays}
+          duration={item.duration}
+          imageUrl={item.imageUrl}
+        />
+      ))}
+    </div>
   </div>
 );
 
@@ -101,12 +139,21 @@ export default function ArtistProfile({
   onClose
 }: ArtistProfileProps) {
   const { toast } = useToast();
-  const catalog = [
-    { title: "Midnight Echoes", artist: name, duration: "3:42", imageUrl: "https://picsum.photos/seed/track1/100/100" },
-    { title: "Neon Voyage", artist: name, duration: "2:58", imageUrl: "https://picsum.photos/seed/track2/100/100" },
-    { title: "Void Pulse", artist: name, duration: "4:15", imageUrl: "https://picsum.photos/seed/track3/100/100" },
-    { title: "Stargazer", artist: name, duration: "3:20", imageUrl: "https://picsum.photos/seed/track4/100/100" },
-    { title: "Winds of Destiny", artist: name, duration: "3:55", imageUrl: "https://picsum.photos/seed/track5/100/100" },
+
+  const albums = [
+    { title: "Midnight Echoes", plays: "2.4M", duration: "3:42", imageUrl: "https://picsum.photos/seed/track1/200/200" },
+    { title: "Void Pulse: The Anthology", plays: "1.1M", duration: "42:15", imageUrl: "https://picsum.photos/seed/track3/200/200" },
+  ];
+
+  const eps = [
+    { title: "Neon Voyage", plays: "840k", duration: "12:58", imageUrl: "https://picsum.photos/seed/track2/200/200" },
+    { title: "Stargazer EP", plays: "420k", duration: "18:20", imageUrl: "https://picsum.photos/seed/track4/200/200" },
+  ];
+
+  const singles = [
+    { title: "Winds of Destiny", plays: "124k", duration: "3:55", imageUrl: "https://picsum.photos/seed/track5/200/200" },
+    { title: "Digital Silence", plays: "98k", duration: "2:45", imageUrl: "https://picsum.photos/seed/track6/200/200" },
+    { title: "Ether Flow", plays: "245k", duration: "3:10", imageUrl: "https://picsum.photos/seed/track7/200/200" },
   ];
 
   const handleEditMedia = (type: 'banner' | 'avatar') => {
@@ -284,22 +331,15 @@ export default function ArtistProfile({
           )}
 
           {/* Catalog Section */}
-          <div className="w-full text-left space-y-8 pb-12">
-             <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <h3 className="text-3xl font-black uppercase tracking-tighter">Catalog</h3>
-                <span className="text-sm font-bold text-white/50 uppercase cursor-pointer hover:text-white transition-colors">View All डिस्कोग्राफी</span>
-             </div>
-             <div className="grid grid-cols-1 gap-6">
-                {catalog.map((item, idx) => (
-                  <CatalogItem 
-                    key={idx}
-                    index={idx + 1}
-                    title={item.title}
-                    artist={item.artist}
-                    duration={item.duration}
-                    imageUrl={item.imageUrl}
-                  />
-                ))}
+          <div className="w-full text-left space-y-16 pb-32">
+             <CatalogSection title="Albums" icon={Disc} items={albums} />
+             <CatalogSection title="EPs" icon={Disc} items={eps} />
+             <CatalogSection title="Singles" icon={Music} items={singles} />
+             
+             <div className="flex justify-center pt-8">
+                <Button variant="ghost" className="text-white/30 font-black uppercase tracking-widest text-xs hover:text-white transition-colors">
+                   View Full डिस्कोग्राफी
+                </Button>
              </div>
           </div>
 
