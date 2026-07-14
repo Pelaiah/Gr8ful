@@ -42,6 +42,20 @@ export default function Home() {
 
   // 3. Portal View
   if (view === 'portal') {
+    // Show selected artist profile (self-view or browsing)
+    if (selectedArtist) {
+      return (
+        <ArtistProfile 
+          name={selectedArtist.name}
+          handle={selectedArtist.handle}
+          followers={selectedArtist.followers}
+          avatarUrl={selectedArtist.avatarUrl}
+          bannerUrl={selectedArtist.bannerUrl}
+          onClose={() => setSelectedArtist(null)}
+        />
+      );
+    }
+
     // Artist Flow
     if (portalMode === 'artist') {
       if (showOnboarding) {
@@ -51,25 +65,19 @@ export default function Home() {
         <ArtistDashboard 
           onStartOnboarding={() => setShowOnboarding(true)} 
           onAudienceMode={() => setPortalMode('audience')}
+          onViewProfile={() => setSelectedArtist({
+            name: "Evelyn Smith",
+            handle: "evelynsmith",
+            followers: "2,425",
+            avatarUrl: "https://picsum.photos/seed/evelyn/400/400",
+            bannerUrl: "https://picsum.photos/seed/portrait1/800/1200"
+          })}
         />
       );
     }
 
     // Audience Flow
     if (portalMode === 'audience') {
-      if (selectedArtist) {
-        return (
-          <ArtistProfile 
-            name={selectedArtist.name}
-            handle={selectedArtist.handle}
-            followers={selectedArtist.followers}
-            avatarUrl={selectedArtist.avatarUrl}
-            bannerUrl={selectedArtist.bannerUrl}
-            onClose={() => setSelectedArtist(null)}
-          />
-        );
-      }
-
       return (
         <div className="relative">
           <AudiencePortal onSelectArtist={(artist) => setSelectedArtist(artist)} />

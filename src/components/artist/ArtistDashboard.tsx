@@ -38,6 +38,7 @@ import { cn } from '@/lib/utils';
 interface ArtistDashboardProps {
   onStartOnboarding: () => void;
   onAudienceMode: () => void;
+  onViewProfile: () => void;
 }
 
 type ArtistTab = 'analytics' | 'rollouts' | 'planner' | 'escrow';
@@ -63,7 +64,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function ArtistDashboard({ onStartOnboarding, onAudienceMode }: ArtistDashboardProps) {
+export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onViewProfile }: ArtistDashboardProps) {
   const [activeTab, setActiveTab] = useState<ArtistTab>('analytics');
 
   return (
@@ -82,7 +83,7 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode }: A
            >
              Audience Mode
            </Button>
-           <Button variant="ghost" size="icon" className="rounded-full">
+           <Button variant="ghost" size="icon" className="rounded-full" onClick={onViewProfile}>
              <User size={20} />
            </Button>
         </div>
