@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState } from 'react';
@@ -85,22 +84,6 @@ const streamData = [
 
 const sparklineData = [
   { value: 400 }, { value: 300 }, { value: 500 }, { value: 450 }, { value: 600 }, { value: 550 }, { value: 700 }
-];
-
-const ageData = [
-  { age: '18 - 24', value: 34, color: '#3b82f6' },
-  { age: '25 - 34', value: 38, color: '#3b82f6' },
-  { age: '35 - 44', value: 17, color: '#3b82f6' },
-  { age: '45 - 54', value: 7, color: '#3b82f6' },
-  { age: '55+', value: 4, color: '#3b82f6' },
-];
-
-const countryData = [
-  { name: 'Brazil', value: 18.7, color: '#3b82f6' },
-  { name: 'USA', value: 12.5, color: '#8b5cf6' },
-  { name: 'Mexico', value: 6.9, color: '#ec4899' },
-  { name: 'UK', value: 4.8, color: '#06b6d4' },
-  { name: 'Other', value: 57.1, color: '#334155' },
 ];
 
 const chartConfig = {
@@ -385,8 +368,8 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
                        </div>
                     </div>
                     <div className="grid grid-cols-7 gap-2">
-                       {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map(d => (
-                         <div key={d} className="text-center text-[10px] font-black text-white/20 pb-2">{d}</div>
+                       {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+                         <div key={i} className="text-center text-[10px] font-black text-white/20 pb-2">{d}</div>
                        ))}
                        {[...Array(28)].map((_, i) => (
                          <div key={i} className={cn(
@@ -394,7 +377,7 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
                            i === 12 ? "bg-blue-600 border-blue-500" : "bg-white/5 border-white/5 hover:bg-white/10"
                          )}>
                             <span className="text-[10px] font-bold">{i + 1}</span>
-                            {i === 12 && <Instagram size={10} />}
+                            {i === 12 && <InstagramIcon className="w-2.5 h-2.5" />}
                             {i === 14 && <div className="w-1 h-1 rounded-full bg-orange-500"></div>}
                          </div>
                        ))}
@@ -402,7 +385,7 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
                     <div className="p-6 bg-white/5 rounded-3xl border border-white/10 flex items-center justify-between">
                        <div className="flex items-center gap-4">
                           <div className="w-12 h-12 rounded-2xl bg-pink-500/10 flex items-center justify-center text-pink-500">
-                             <Instagram size={24} />
+                             <InstagramIcon className="w-6 h-6" />
                           </div>
                           <div>
                              <h4 className="text-sm font-bold">Instagram Teaser Post</h4>
