@@ -23,24 +23,16 @@ import {
 } from 'lucide-react';
 import { 
   ChartContainer, 
-  ChartTooltip, 
   ChartTooltipContent, 
   ChartConfig 
 } from "@/components/ui/chart";
 import { 
-  Bar, 
-  BarChart, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid,
-  ResponsiveContainer,
-  Line,
-  LineChart,
   Area,
   AreaChart,
+  CartesianGrid,
+  XAxis,
   Tooltip
 } from "recharts";
-import ArtistProfile from './ArtistProfile';
 import { cn } from '@/lib/utils';
 
 interface ArtistDashboardProps {
@@ -125,27 +117,45 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode }: A
                     <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-pink-500"></div><span className="text-[10px] font-bold text-zinc-400 uppercase">TikTok</span></div>
                   </div>
                 </div>
-                <div className="h-[300px] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData}>
-                      <defs>
-                        <linearGradient id="colorStreams" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#9333ea" stopOpacity={0.1}/>
-                          <stop offset="95%" stopColor="#9333ea" stopOpacity={0}/>
-                        </linearGradient>
-                        <linearGradient id="colorTikTok" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#ec4899" stopOpacity={0.1}/>
-                          <stop offset="95%" stopColor="#ec4899" stopOpacity={0}/>
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                      <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{fontSize: 10, fontWeight: 700}} />
-                      <Tooltip content={<ChartTooltipContent />} />
-                      <Area type="monotone" dataKey="streams" stroke="#9333ea" strokeWidth={3} fillOpacity={1} fill="url(#colorStreams)" />
-                      <Area type="monotone" dataKey="tiktok" stroke="#ec4899" strokeWidth={3} fillOpacity={1} fill="url(#colorTikTok)" />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
+                
+                <ChartContainer config={chartConfig} className="h-[300px] w-full">
+                  <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="colorStreams" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#9333ea" stopOpacity={0.1}/>
+                        <stop offset="95%" stopColor="#9333ea" stopOpacity={0}/>
+                      </linearGradient>
+                      <linearGradient id="colorTikTok" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#ec4899" stopOpacity={0.1}/>
+                        <stop offset="95%" stopColor="#ec4899" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                    <XAxis 
+                      dataKey="day" 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{fontSize: 10, fontWeight: 700}} 
+                    />
+                    <Tooltip content={<ChartTooltipContent />} />
+                    <Area 
+                      type="monotone" 
+                      dataKey="streams" 
+                      stroke="#9333ea" 
+                      strokeWidth={3} 
+                      fillOpacity={1} 
+                      fill="url(#colorStreams)" 
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="tiktok" 
+                      stroke="#ec4899" 
+                      strokeWidth={3} 
+                      fillOpacity={1} 
+                      fill="url(#colorTikTok)" 
+                    />
+                  </AreaChart>
+                </ChartContainer>
               </div>
 
               <div className="bg-white p-8 rounded-[2.5rem] border border-zinc-100 shadow-sm space-y-6">
@@ -272,7 +282,7 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode }: A
         )}
 
         {/* Page 3: Content & Live Planner */}
-        {activeTab === 'planner' && ( activeTab === 'planner' && (
+        {activeTab === 'planner' && (
           <div className="space-y-8">
             <header>
                <h2 className="text-4xl font-black tracking-tighter">Content & Live Planner</h2>
@@ -329,7 +339,7 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode }: A
                </div>
             </div>
           </div>
-        ))}
+        )}
 
         {/* Page 4: Collaboration & Rights Console */}
         {activeTab === 'escrow' && (
