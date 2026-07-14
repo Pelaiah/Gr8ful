@@ -129,7 +129,7 @@ export default function ArtistProfile({
         <div className="absolute inset-0 backdrop-blur-[2px]"></div>
 
         {isEditable && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="absolute top-24 left-6 pointer-events-none">
             <Button 
               onClick={() => handleEditMedia('banner')}
               className="pointer-events-auto bg-black/40 backdrop-blur-md border border-white/20 hover:bg-black/60 rounded-full h-12 px-6 font-black uppercase tracking-tighter text-xs"
