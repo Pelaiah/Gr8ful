@@ -148,6 +148,13 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+const timelineEvents = [
+  { date: "Jan 2025", type: "Single", title: "Dancing In The Flames", status: "Live", nodeColor: "bg-white", statusColor: "text-green-500" },
+  { date: "Mar 2025", type: "EP", title: "Echoes Of Silence", status: "Delivered", nodeColor: "bg-blue-500", statusColor: "text-green-500" },
+  { date: "Jun 2025", type: "Album", title: "Hurry Up Tomorrow", status: "Scheduled", nodeColor: "bg-blue-500", statusColor: "text-blue-400" },
+  { date: "Sep 2025", type: "Music Video", title: "Open Hearts", status: "Planning", nodeColor: "bg-purple-500", statusColor: "text-purple-400" },
+];
+
 export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onViewProfile }: ArtistDashboardProps) {
   const [activeTab, setActiveTab] = useState<ArtistTab>('analytics');
 
@@ -521,6 +528,27 @@ export default function ArtistDashboard({ onStartOnboarding, onAudienceMode, onV
                              <Plus className="text-white/20" size={32} />
                              <span className="text-xs font-bold text-white/40 uppercase tracking-widest">Initialize Collection</span>
                           </div>
+                       </div>
+                    </div>
+
+                    {/* Release Timeline Component */}
+                    <div className="glass-card rounded-[2.5rem] p-8 border-white/5 space-y-8">
+                       <h3 className="text-lg font-bold">Release Timeline</h3>
+                       <div className="space-y-0 relative">
+                          <div className="absolute left-[5.5rem] top-4 bottom-4 w-px bg-white/10"></div>
+                          {timelineEvents.map((event, i) => (
+                             <div key={i} className="flex items-center gap-8 py-4">
+                                <span className="w-16 text-[10px] font-black uppercase text-white/40 text-right">{event.date}</span>
+                                <div className={cn("w-3 h-3 rounded-full z-10 border-4 border-[#0A0A0B] outline outline-1 outline-white/5", event.nodeColor)}></div>
+                                <div className="flex-1 flex items-center justify-between">
+                                   <div>
+                                      <h4 className="text-[10px] font-black uppercase text-white/40 leading-none mb-1">{event.type}</h4>
+                                      <p className="text-sm font-bold">"{event.title}"</p>
+                                   </div>
+                                   <span className={cn("text-[10px] font-black uppercase tracking-widest", event.statusColor)}>{event.status}</span>
+                                </div>
+                             </div>
+                          ))}
                        </div>
                     </div>
 
