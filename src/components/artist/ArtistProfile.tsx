@@ -9,16 +9,13 @@ import {
   Globe, 
   Info, 
   UserCheck, 
-  Plus,
   Instagram,
   Facebook,
   Youtube,
-  Music,
   Play
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 
 interface ArtistProfileProps {
   name: string;
@@ -106,9 +103,9 @@ export default function ArtistProfile({
   ];
 
   return (
-    <div className="relative w-full mx-auto overflow-hidden bg-black text-white rounded-[2.5rem] shadow-2xl h-[800px]">
+    <div className="relative w-full min-h-screen bg-black text-white">
       {/* Background Layer (Fixed) */}
-      <div className="absolute inset-0 z-0">
+      <div className="fixed inset-0 z-0">
         <img 
           src={bannerUrl} 
           alt="Artist Banner" 
@@ -119,7 +116,7 @@ export default function ArtistProfile({
       </div>
 
       {/* Header Navigation (Fixed on top) */}
-      <div className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between p-6 pt-8 bg-gradient-to-b from-black/40 to-transparent">
+      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-6 pt-8 bg-gradient-to-b from-black/40 to-transparent">
         <Button 
           variant="ghost" 
           size="icon" 
@@ -135,11 +132,11 @@ export default function ArtistProfile({
       </div>
 
       {/* Scrollable Content Container */}
-      <div className="absolute inset-0 z-10 overflow-y-auto no-scrollbar pt-24 pb-12">
-        <div className="flex flex-col items-center px-8 text-center">
+      <div className="relative z-10 pt-32 pb-24">
+        <div className="flex flex-col items-center px-8 text-center max-w-4xl mx-auto">
           
           {/* Floating Badges Section */}
-          <div className="flex justify-center gap-6 mt-4 mb-8">
+          <div className="flex justify-center gap-6 mb-12">
             <Badge 
               icon={() => (
                 <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -165,53 +162,55 @@ export default function ArtistProfile({
           </div>
 
           {/* Profile Details */}
-          <div className="w-28 h-28 rounded-full border-4 border-white/10 overflow-hidden shadow-2xl mb-6 relative shrink-0">
+          <div className="w-40 h-40 rounded-full border-4 border-white/10 overflow-hidden shadow-2xl mb-8 relative shrink-0">
             <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
             <div className="absolute inset-0 ring-1 ring-inset ring-white/20 rounded-full"></div>
           </div>
 
-          <h1 className="text-3xl font-black tracking-tight mb-1">{name}</h1>
-          <div className="flex gap-2 text-xs font-bold text-white/60 mb-4">
+          <h1 className="text-5xl lg:text-7xl font-black tracking-tighter mb-2">{name}</h1>
+          <div className="flex gap-4 text-sm lg:text-base font-bold text-white/60 mb-8">
             <span>{followers} Followers</span>
+            <div className="w-1 h-1 rounded-full bg-white/20 self-center"></div>
             <span>377 Follow</span>
+            <div className="w-1 h-1 rounded-full bg-white/20 self-center"></div>
             <span>14 Clubs</span>
           </div>
           
-          <p className="text-sm font-medium text-white/70 max-w-[240px] leading-relaxed mb-6">
+          <p className="text-lg lg:text-xl font-medium text-white/70 max-w-xl leading-relaxed mb-10">
             independent artist / producer<br/>autonomy is everything
           </p>
 
           {/* Social Links Bar */}
-          <div className="flex gap-5 mb-8 bg-white/5 backdrop-blur-xl px-8 py-3.5 rounded-full border border-white/10">
+          <div className="flex gap-8 mb-12 bg-white/5 backdrop-blur-xl px-12 py-5 rounded-full border border-white/10">
             <button className="text-white/40 hover:text-white transition-all transform hover:scale-110">
-              <SpotifyIcon className="w-5 h-5" />
+              <SpotifyIcon className="w-8 h-8" />
             </button>
             <button className="text-white/40 hover:text-white transition-all transform hover:scale-110">
-              <Instagram className="w-5 h-5" />
+              <Instagram className="w-8 h-8" />
             </button>
             <button className="text-white/40 hover:text-white transition-all transform hover:scale-110">
-              <TikTokIcon className="w-5 h-5" />
+              <TikTokIcon className="w-8 h-8" />
             </button>
             <button className="text-white/40 hover:text-white transition-all transform hover:scale-110">
-              <Youtube className="w-5 h-5" />
+              <Youtube className="w-8 h-8" />
             </button>
             <button className="text-white/40 hover:text-white transition-all transform hover:scale-110">
-              <Facebook className="w-5 h-5" />
+              <Facebook className="w-8 h-8" />
             </button>
           </div>
 
           {/* Small Action Buttons */}
-          <div className="flex gap-2 mb-8">
-            <Button variant="secondary" className="h-8 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-[10px] font-black uppercase hover:bg-white/20 px-4">
-              <Info className="w-3 h-3 mr-1.5" /> About
+          <div className="flex gap-4 mb-12">
+            <Button variant="secondary" className="h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-sm font-black uppercase hover:bg-white/20 px-8">
+              <Info className="w-4 h-4 mr-2" /> About
             </Button>
-            <Button variant="secondary" className="h-8 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-[10px] font-black uppercase hover:bg-white/20 px-4">
-              <Globe className="w-3 h-3 mr-1.5" /> gr8ful.app/@{handle}
+            <Button variant="secondary" className="h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-sm font-black uppercase hover:bg-white/20 px-8">
+              <Globe className="w-4 h-4 mr-2" /> gr8ful.app/@{handle}
             </Button>
           </div>
 
           {/* Social Context Cards */}
-          <div className="flex gap-6 mb-10 w-full justify-center">
+          <div className="flex gap-10 mb-16 w-full justify-center">
             <SocialCard 
               title="friends follow" 
               count="33" 
@@ -232,17 +231,17 @@ export default function ArtistProfile({
           </div>
 
           {/* Primary Action Button */}
-          <Button className="w-full h-16 rounded-[24px] bg-white/10 backdrop-blur-xl border border-white/20 text-white font-black text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-3 mb-12">
-            <UserCheck className="w-6 h-6" /> Follow
+          <Button className="w-full max-w-md h-20 rounded-[32px] bg-white/10 backdrop-blur-xl border border-white/20 text-white font-black text-2xl hover:bg-white/20 transition-all flex items-center justify-center gap-4 mb-20">
+            <UserCheck className="w-8 h-8" /> Follow
           </Button>
 
           {/* Catalog Section */}
-          <div className="w-full text-left space-y-6 pb-8">
-             <div className="flex items-center justify-between">
-                <h3 className="text-xl font-black uppercase tracking-tighter">Catalog</h3>
-                <span className="text-[10px] font-bold text-white/50 uppercase">View All</span>
+          <div className="w-full text-left space-y-8 pb-12">
+             <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <h3 className="text-3xl font-black uppercase tracking-tighter">Catalog</h3>
+                <span className="text-sm font-bold text-white/50 uppercase cursor-pointer hover:text-white transition-colors">View All डिस्कोग्राफी</span>
              </div>
-             <div className="space-y-4">
+             <div className="grid grid-cols-1 gap-6">
                 {catalog.map((item, idx) => (
                   <CatalogItem 
                     key={idx}

@@ -59,16 +59,14 @@ export default function Home() {
     if (portalMode === 'audience') {
       if (selectedArtist) {
         return (
-          <div className="bg-black min-h-screen flex items-center justify-center p-4">
-            <ArtistProfile 
-              name={selectedArtist.name}
-              handle={selectedArtist.handle}
-              followers={selectedArtist.followers}
-              avatarUrl={selectedArtist.avatarUrl}
-              bannerUrl={selectedArtist.bannerUrl}
-              onClose={() => setSelectedArtist(null)}
-            />
-          </div>
+          <ArtistProfile 
+            name={selectedArtist.name}
+            handle={selectedArtist.handle}
+            followers={selectedArtist.followers}
+            avatarUrl={selectedArtist.avatarUrl}
+            bannerUrl={selectedArtist.bannerUrl}
+            onClose={() => setSelectedArtist(null)}
+          />
         );
       }
 
