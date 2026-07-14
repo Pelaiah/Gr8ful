@@ -153,9 +153,6 @@ export default function ArtistProfile({
         </Button>
         <div className="flex flex-col items-center">
           <span className="text-sm font-medium text-white/80 tracking-tight">gr8ful.app/@{handle}</span>
-          {isEditable && (
-            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-cyan-400 bg-cyan-400/10 px-2 py-0.5 rounded-full mt-1">Monitor Mode</span>
-          )}
         </div>
         <Button variant="ghost" size="icon" className="rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20">
           <MoreHorizontal className="w-5 h-5" />
