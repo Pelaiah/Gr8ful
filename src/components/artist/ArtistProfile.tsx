@@ -127,18 +127,19 @@ export default function ArtistProfile({
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80"></div>
         <div className="absolute inset-0 backdrop-blur-[2px]"></div>
-
-        {isEditable && (
-          <div className="absolute top-24 left-6 pointer-events-none">
-            <Button 
-              onClick={() => handleEditMedia('banner')}
-              className="pointer-events-auto bg-black/40 backdrop-blur-md border border-white/20 hover:bg-black/60 rounded-full h-12 px-6 font-black uppercase tracking-tighter text-xs"
-            >
-              <Camera size={16} className="mr-2" /> Change Banner Asset
-            </Button>
-          </div>
-        )}
       </div>
+
+      {/* Edit Banner Button (Top Layer, Top-Left) */}
+      {isEditable && (
+        <div className="fixed top-24 left-6 z-[60]">
+          <Button 
+            onClick={() => handleEditMedia('banner')}
+            className="bg-black/40 backdrop-blur-md border border-white/20 hover:bg-black/60 rounded-full h-12 px-6 font-black uppercase tracking-tighter text-xs shadow-2xl transition-all active:scale-95"
+          >
+            <Camera size={16} className="mr-2" /> Change Banner Asset
+          </Button>
+        </div>
+      )}
 
       {/* Header Navigation (Fixed on top) */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-6 pt-8 bg-gradient-to-b from-black/60 to-transparent">
@@ -162,7 +163,7 @@ export default function ArtistProfile({
       </div>
 
       {/* Scrollable Content Container */}
-      <div className="relative z-10 pt-32 pb-24">
+      <div className="relative z-10 pt-48 pb-24">
         <div className="flex flex-col items-center px-8 text-center max-w-4xl mx-auto">
           
           {/* Floating Badges Section */}
@@ -200,7 +201,7 @@ export default function ArtistProfile({
             {isEditable && (
               <button 
                 onClick={() => handleEditMedia('avatar')}
-                className="absolute inset-0 bg-black/60 rounded-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border-2 border-dashed border-white/20"
+                className="absolute inset-0 bg-black/60 rounded-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border-2 border-dashed border-white/20 z-[61]"
               >
                 <Camera size={24} className="mb-1" />
                 <span className="text-[10px] font-black uppercase">Edit Photo</span>
